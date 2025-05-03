@@ -43,6 +43,7 @@ public class CarValuationTest {
     @MethodSource("getCarRegs")
     public void CarValuationTestCase(String carReg) {
         HomePage homePage = new HomePage();
+        carReg = carReg.replaceAll(" ", "");
         ReportPage reportPage = homePage.enterCarNumGetReport(carReg);
         CarDetails carDetails = reportPage.getCarDetails(carReg);
         Assertions.assertNotNull(carDetails,"Unable to find CarDetails for Reg " + carReg);
@@ -55,7 +56,6 @@ public class CarValuationTest {
     }
 
     private CarDetails extractMatchingCarDetails(String carReg) {
-        carReg = carReg.replaceAll(" ", "");
         return expectedDetails.stream().filter(d-> StringUtils.endsWithIgnoreCase(d.getCarRegNo(), carReg))
                 .findFirst().orElse(null);
     }
